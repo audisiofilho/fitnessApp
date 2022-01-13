@@ -12,21 +12,6 @@ function AppRoutes() {
   return (
     <AppDrawer.Navigator
       drawerContent={ (props)=> <CustomDrawer {...props}/>}
-      drawerStyle={{
-        backgroundColor: "#171717",
-      }}
-      //drawerContentOptions={{
-        //labelStyle: {
-        //  fontWeight: "bold",
-        //},
-        //activeTintColor: "#fff",
-        //activeBackgroundColor: "#ffd700",
-        //inactiveBackgroundColor: "#000",
-        //inactiveTintColor: "#ddd",
-        //itemStyle:{
-          //  marginVertical: 5,
-        //}
-      //}}
       screenOptions={{
         drawerStyle: {
           backgroundColor: '#FFFFFF',
@@ -35,16 +20,17 @@ function AppRoutes() {
         drawerLabelStyle: {
           fontWeight: "bold",
         },
-        drawerActiveTintColor: "#000",
-        drawerActiveBackgroundColor: "#DE1414",
-        drawerInactiveBackgroundColor: "#132743",
-        drawerInactiveTintColor: "#fff",
+        drawerActiveTintColor: "#FFF",
+        drawerActiveBackgroundColor: "#132743",
+        drawerInactiveBackgroundColor: "#DE1414",
+        drawerInactiveTintColor: "#000",
         drawerItemStyle:{
             marginVertical: 5,
-        }
+        },
+        headerShown:false
       }}
     >
-      <AppDrawer.Screen name="Home" component={Home} />
+      <AppDrawer.Screen name="Home" component={Home} headerShown={false} />
       <AppDrawer.Screen name="Profile" component={Profile} />
     </AppDrawer.Navigator>
   );

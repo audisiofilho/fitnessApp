@@ -25,7 +25,7 @@ function AuthProvider({children}) {
     loadStorage();
   }, []);
 
-  async function signIn(email, password) {
+  async function signInUser(email, password) {
     setLoadingAuth(true);
 
     await auth()
@@ -56,7 +56,7 @@ function AuthProvider({children}) {
       });
   }
 
-  async function signUp(email, password, name) {
+  async function signUpUser(email, password, name) {
     setLoadingAuth(true);
 
     await auth()
@@ -103,8 +103,8 @@ function AuthProvider({children}) {
       value={{
         signed: !!user,
         user,
-        signUp,
-        signIn,
+        signUpUser,
+        signInUser,
         signOut,
         loadingAuth,
         loading,

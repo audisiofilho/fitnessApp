@@ -5,9 +5,9 @@ export const Container = styled.View`
   background-color: #132743;
   align-items: center;
 `;
-export const AreaLogin = styled.View`
+export const AreaLogin = styled.SafeAreaView`
   width: 90%;
-  height: 67%;
+  height: 400px;
   margin: 10px;
   background-color: #ffffff;
   position: absolute;
