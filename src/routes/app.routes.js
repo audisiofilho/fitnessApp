@@ -30,8 +30,8 @@ function AppRoutes() {
         headerShown:false
       }}
     >
-      <AppDrawer.Screen name="Home" component={Home} headerShown={false} />
-      <AppDrawer.Screen name="Profile" component={Profile} />
+      <AppDrawer.Screen name="Pagina Incial" component={Home} headerShown={false} />
+      <AppDrawer.Screen name="Editar Perfil" component={Profile} />
     </AppDrawer.Navigator>
   );
 }
