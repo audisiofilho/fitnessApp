@@ -3642,7 +3642,7 @@ internal-slot@^1.0.3:
     has "^1.0.3"
     side-channel "^1.0.4"
 
-invariant@^2.2.4:
+invariant@^2.2.2, invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
@@ -5781,6 +5781,13 @@ react-native-image-picker@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-4.7.0.tgz#ec9c72f90dce5bdfea4d22f6f1274bb3748101de"
   integrity sha512-JOXkMmzRnjMvmnzeWSeVeEZFWo0xx7LRl1wP57V/GPpUkeHiShAP0qWzg/sTLSSK9CQU4PW74PeoPiYE85lX7Q==
+
+react-native-onesignal@^4.3.5:
+  version "4.3.5"
+  resolved "https://registry.yarnpkg.com/react-native-onesignal/-/react-native-onesignal-4.3.5.tgz#f17e4e67dcd9cff12986d3a558beafc552399830"
+  integrity sha512-X4SqbrRDX09yM92dAxlS5/19Bb6FGO5xw6Omvg+XyCDxx3eQh0yv3DoTxPEOJGW9bKBVKl1h5VBtkkFrqKWlYg==
+  dependencies:
+    invariant "^2.2.2"
 
 react-native-reanimated@2.2.4:
   version "2.2.4"
