@@ -12,9 +12,11 @@ export const HeaderHome = styled.View`
     margin-top: -4%;
     align-items: center;
     justify-content: center;
+    flex-direction: row ;
 `;
 export const HeaderTitle = styled.Text`
 color: #FFFFFF;
+left: -50% ;
 font-size: 22px;
 `;
 export const ListExercises = styled.FlatList`

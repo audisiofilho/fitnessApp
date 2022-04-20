@@ -1,5 +1,6 @@
 import React, {useState, useContext, useEffect, useCallback} from 'react';
 import {Text, View, ActivityIndicator} from 'react-native';
+import {Picker} from '@react-native-picker/picker';
 
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
@@ -8,6 +9,7 @@ import {AuthContext} from '../../contexts/auth';
 import Header from '../../components/Header';
 import ExercisesList from '../../components/ExercisesList';
 import {Container, HeaderHome, HeaderTitle, ListExercises} from './styles';
+import {color} from 'react-native-reanimated';
 
 export default function Home() {
   const {user} = useContext(AuthContext);
@@ -18,6 +20,7 @@ export default function Home() {
   const [loadingRefresh, setLoadingRefresh] = useState(false);
   const [lastItem, setLastItem] = useState('');
   const [emptyList, setEmptyList] = useState(false);
+  const [selectedValue, setSelectedValue] = useState("");
 
   useFocusEffect(
     useCallback(() => {
@@ -26,6 +29,7 @@ export default function Home() {
       function fetchPosts() {
         firestore()
           .collection(' exercises')
+          .where('treino', '==', selectedValue)
           .get()
           .then(snapshot => {
             if (isActive) {
@@ -52,7 +56,7 @@ export default function Home() {
       return () => {
         isActive = false;
       };
-    }, []),
+    }, [selectedValue]),
   );
 
   async function handleRefreshPosts() {
@@ -60,6 +64,7 @@ export default function Home() {
 
     firestore()
       .collection(' exercises')
+      .where('treino', '==', selectedValue)
       .get()
       .then(snapshot => {
         setExercices([]);
@@ -78,32 +83,33 @@ export default function Home() {
     setLoadingRefresh(false);
   }
 
-  async function getListExercises(){
-    if(emptyList){
+  async function getListExercises() {
+    if (emptyList) {
       setLoading(false);
       return null;
     }
 
-    if(loading) return;
+    if (loading) return;
 
     firestore()
-    .collection(' exercises')
-    .startAfter(lastItem)
-    .get()
-    .then(snapshot => {
-      const exerciseList = [];
+      .collection(' exercises')
+      .where('treino', '==', selectedValue)
+      .startAfter(lastItem)
+      .get()
+      .then(snapshot => {
+        const exerciseList = [];
 
-      snapshot.docs.map(u => {
-        exerciseList.push({
-          ...u.data(),
-          id: u.id,
+        snapshot.docs.map(u => {
+          exerciseList.push({
+            ...u.data(),
+            id: u.id,
+          });
         });
+        setEmptyList(!!snapshot.empty);
+        setLastItem(snapshot.docs[snapshot.docs.length - 1]);
+        setExercices(oldExercices => [...oldExercices, ...exerciseList]);
+        setLoading(false);
       });
-      setEmptyList(!!snapshot.empty);
-      setLastItem(snapshot.docs[snapshot.docs.length - 1]);
-      setExercices(oldExercices => [...oldExercices, ...exerciseList]);
-      setLoading(false);
-    })
   }
 
   return (
@@ -111,8 +117,27 @@ export default function Home() {
       <Header />
       <HeaderHome style={{elevation: 15}}>
         <HeaderTitle style={{fontFamily: 'Roboto-Bold'}}>
-          Exercicios De Hoje
+          Exercicios De Hoje:
         </HeaderTitle>
+          <Picker
+            mode="dropdown"
+            selectedValue={selectedValue}
+            style={{
+              width: 160,
+              color: '#fff',
+              fontWeight: "bold",
+              fontSize: 30
+
+            }}
+            dropdownIconColor="#fff"
+            dropdownIconRippleColor={'#fff'}
+            onValueChange={(itemValue, itemIndex) =>
+              setSelectedValue(itemValue)
+            }>
+            <Picker.Item label="Peito" value="Peito" />
+            <Picker.Item label="Pernas" value="Pernas" />
+              
+          </Picker>
       </HeaderHome>
       {loading ? (
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
