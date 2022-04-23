@@ -9,7 +9,8 @@ import {AuthContext} from '../../contexts/auth';
 import Header from '../../components/Header';
 import ExercisesList from '../../components/ExercisesList';
 import {Container, HeaderHome, HeaderTitle, ListExercises} from './styles';
-import {color} from 'react-native-reanimated';
+
+import EmptyListExercises from '../../components/EmptyListExercises';
 
 export default function Home() {
   const {user} = useContext(AuthContext);
@@ -20,7 +21,7 @@ export default function Home() {
   const [loadingRefresh, setLoadingRefresh] = useState(false);
   const [lastItem, setLastItem] = useState('');
   const [emptyList, setEmptyList] = useState(false);
-  const [selectedValue, setSelectedValue] = useState("");
+  const [selectedValue, setSelectedValue] = useState('Peito');
 
   useFocusEffect(
     useCallback(() => {
@@ -44,7 +45,6 @@ export default function Home() {
               });
               setEmptyList(!!snapshot.empty);
               setExercices(exerciseList);
-              //console.log(exercises);
               setLastItem(snapshot.docs[snapshot.docs.length - 1]);
               setLoading(false);
             }
@@ -105,10 +105,15 @@ export default function Home() {
             id: u.id,
           });
         });
-        setEmptyList(!!snapshot.empty);
+        //setEmptyList(!!snapshot.empty);
+        setEmptyList(false);
         setLastItem(snapshot.docs[snapshot.docs.length - 1]);
         setExercices(oldExercices => [...oldExercices, ...exerciseList]);
         setLoading(false);
+      })
+      .catch(err => {
+        console.log(err);
+        setEmptyList(true);
       });
   }
 
@@ -117,27 +122,26 @@ export default function Home() {
       <Header />
       <HeaderHome style={{elevation: 15}}>
         <HeaderTitle style={{fontFamily: 'Roboto-Bold'}}>
-          Exercicios De Hoje:
+          Treino De Hoje:
         </HeaderTitle>
-          <Picker
-            mode="dropdown"
-            selectedValue={selectedValue}
-            style={{
-              width: 160,
-              color: '#fff',
-              fontWeight: "bold",
-              fontSize: 30
-
-            }}
-            dropdownIconColor="#fff"
-            dropdownIconRippleColor={'#fff'}
-            onValueChange={(itemValue, itemIndex) =>
-              setSelectedValue(itemValue)
-            }>
-            <Picker.Item label="Peito" value="Peito" />
-            <Picker.Item label="Pernas" value="Pernas" />
-              
-          </Picker>
+        <Picker
+          mode="dropdown"
+          selectedValue={selectedValue}
+          style={{
+            width: 160,
+            color: '#fff',
+            fontWeight: 'bold',
+            fontSize: 30,
+          }}
+          dropdownIconColor="#fff"
+          dropdownIconRippleColor={'#fff'}
+          onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}>
+          <Picker.Item label="Peito" value="Peito" />
+          <Picker.Item label="Costas" value="Costas" />
+          <Picker.Item label="Pernas" value="Pernas" />
+          <Picker.Item label="Abdominal" value="Abdominal" />
+          <Picker.Item label="Funcional" value="Funcional" />
+        </Picker>
       </HeaderHome>
       {loading ? (
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -148,6 +152,7 @@ export default function Home() {
           showsVerticalScrollIndicator={false}
           data={exercises}
           renderItem={({item}) => <ExercisesList data={item} />}
+          ListEmptyComponent={()=> <EmptyListExercises/>}
           refreshing={loadingRefresh}
           onRefresh={handleRefreshPosts}
           onEndReached={() => getListExercises()}

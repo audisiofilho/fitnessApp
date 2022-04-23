@@ -1,17 +1,22 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {View, Text, Image, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import {
   DrawerContentScrollView,
   DrawerItemList,
-  DrawerItem,
 } from '@react-navigation/drawer';
 
 import storage from '@react-native-firebase/storage';
 
 import {AuthContext} from '../../contexts/auth';
 import Feather from 'react-native-vector-icons/Feather';
-import {Avatar, HeaderDrawer} from './styles';
-import { useNavigation, DrawerActions } from "@react-navigation/native";
+import {HeaderDrawer} from './styles';
+import {useNavigation, DrawerActions} from '@react-navigation/native';
 
 export default function CustomDrawer(props) {
   const navigation = useNavigation();
@@ -30,8 +35,6 @@ export default function CustomDrawer(props) {
             .getDownloadURL();
           setUrl(response);
         }
-
-        console.log(response);
       } catch (err) {
         console.log('Não encontramos nenhuma foto');
       }
@@ -50,17 +53,27 @@ export default function CustomDrawer(props) {
           marginTop: 25,
         }}>
         <HeaderDrawer style={{elevation: 15}}>
-          <TouchableWithoutFeedback onPress={ () => navigation.dispatch(DrawerActions.closeDrawer()) }>
+          <TouchableWithoutFeedback
+            onPress={() => navigation.dispatch(DrawerActions.closeDrawer())}>
             <Feather name="x" size={35} color="#ffffff" />
           </TouchableWithoutFeedback>
         </HeaderDrawer>
         {url ? (
-          <Avatar source={{uri: url}} />
+          <Image
+            source={{uri: url}}
+            style={{
+              width: 100,
+              height: 100,
+              borderColor: 'black',
+              borderRadius: 50,
+              borderWidth: 2,
+            }}
+          />
         ) : (
           <Image
             source={require('../../assets/images/avatar.png')}
             style={{width: 100, height: 100}}
-            resizeMode="contain"
+            //resizeMode="contain"
           />
         )}
         <Text
@@ -86,13 +99,6 @@ export default function CustomDrawer(props) {
 
       <DrawerItemList {...props} activeTintColor="#000" />
 
-      {/*<DrawerItem
-        {...props}
-        label="SAIR"
-        inactiveBackgroundColor="#DE1414"
-        inactiveTintColor= "#000"
-        onPress={() => signOut()}
-      />*/}
       <Text
         style={{
           color: '#000',

@@ -8,7 +8,7 @@ export default function ExercisesList({data}) {
     <Container style={{elevation: 15}}>
       <TextList style={{fontFamily: 'Roboto-Bold'}}>{data.name}</TextList>
       <TextList style={{fontFamily: 'Roboto-Bold'}}>{data.series}</TextList>
-      <Icon source={{uri: data.image}} />
+      {/*<Icon source={{uri: data.image}} />*/}
     </Container>
   );
 }
